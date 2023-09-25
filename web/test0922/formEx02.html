@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+        table, th, tr, td{
+            border: 1px solid black;
+        }
+	</style>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+        $(function () {
+            $('form').submit(function () {
+                if ($('#title').val() === '') {
+                    alert('제목을 입력하세요');
+                    $('#title').focus();
+                    return false;
+                }
+                if ($('#name').val() === '') {
+                    alert('작성자를 입력하세요');
+                    $('#name').focus();
+                    return false;
+                }
+                if ($('#mypasswd').val() === '') {
+                    alert('비밀번호를 입력하세요');
+                    $('#mypasswd').focus();
+                    return false;
+                }
+                if ($('#mycontent').val() === '') {
+                    alert('내용을 입력하세요');
+                    $('#mycontent').focus();
+                    return false;
+                }
+            });
+        });
+	</script>
+</head>
+<body>
+<form method="post">
+	<table>
+		<caption>로그인</caption>
+		<tr><th>제목</th><td><input type="text" id="title"></td></tr>
+		<tr><th>작성자</th><td><input type="text" id="name"></td></tr>
+		<tr><th>비밀번호</th><td><input type="text" id="mypasswd"></td></tr>
+		<tr><th>내용</th><td><input type="text" id="mycontent"></td></tr>
+		<tr align="center"><td colspan="2"><input type="submit" value="로그인"><input type="reset" value="취소"></td></tr>
+	</table>
+</form>
+</body>
+</html>

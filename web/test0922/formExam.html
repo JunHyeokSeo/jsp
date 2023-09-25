@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+		table, tr, td{
+			border: 1px solid black;
+		}
+	</style>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+        $(function () {
+            $('form').submit(function () {
+                if ($('#myid').val() === '') {
+                    alert('ID를 입력하세요');
+                    $('#myid').focus();
+                    return false;
+                }
+                if ($('#mypasswd').val() === '') {
+                    alert('PW를 입력하세요');
+                    $('#mypasswd').focus();
+                    return false;
+                }
+            });
+        });
+	</script>
+</head>
+<body>
+<form method="post">
+	<table>
+		<caption>로그인</caption>
+		<tr><td>ID</td><td><input type="text" id="myid"></td></tr>
+		<tr><td>비밀번호</td><td><input type="text" id="mypasswd"></td></tr>
+		<tr align="center"><td colspan="2"><input type="submit" value="로그인"><input type="reset" value="취소"></td></tr>
+	</table>
+</form>
+</body>
+</html>

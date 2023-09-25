@@ -29,6 +29,8 @@ address 파라미터 = <%= request.getParameter("address") %>
 
 <b>request.getParameterNames() 메소드 사용</b><br>
 <%
+    // 입력이나 선택한 양식의 name 값을 구해오는 메소드
+    // 열거형 ex) name. address, pet
     Enumeration num = request.getParameterNames();
     while(num.hasMoreElements()) {
         String name = (String)num.nextElement();
@@ -37,8 +39,9 @@ address 파라미터 = <%= request.getParameter("address") %>
 <%
     }
 %>
-<p>
 
+<p>
+    <%-- name: key 값, value: value 값--%>
 <b>request.getParameterMap() 메소드 사용</b><br>
 <%
     Map parameterMap = request.getParameterMap();

@@ -6,10 +6,11 @@
 	<meta charset="utf-8">		
 </head>
 <body>
-
 	<%
+        // 한글 인코딩 처리
 		request.setCharacterEncoding("utf-8");
 
+		// 여러개의 파라미터 값을 구함
 		String[] choice = request.getParameterValues("site");
 		String result = "";
 

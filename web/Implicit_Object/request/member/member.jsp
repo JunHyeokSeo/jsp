@@ -1,13 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jun
-  Date: 2023/09/25
-  Time: 2:17 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+
 <%
-    request.setCharacterEncoding("UTF-8");
+    request.setCharacterEncoding("utf-8");
 
     String id = request.getParameter("id");
     String passwd = request.getParameter("passwd");
@@ -27,12 +22,34 @@
     String gender = request.getParameter("gender");
 
     String[] hobby = request.getParameterValues("hobby");
-    String h = ""; // String h = "공부-게임-등산"
-    for (String tmp: hobby) {
-        h += tmp + '-';
-    }
+    String h = "";            // String h = "공부-게임-등산-"
+    for (String hy : hobby)
+        h += hy + "-";
 
     String intro = request.getParameter("intro");
-	String introduce =request.getParameter()
+    String introduce =
+            request.getParameter("intro").replace("\n", "<br>");
 %>
-취미 : <%=h%>
+
+ID : <%=id %> <br>
+비밀번호 : <%=passwd %> <br>
+성명 : <%=name %> <br>
+주민번호 : <%=jumin1 %>-<%=jumin2 %> <br>
+E-Mail : <%=mailid %>@<%=domain %> <br>
+전화번호 : <%=tel1 %>-<%=tel2 %>-<%=tel3 %> <br>
+핸드폰 : <%=phone1 %>-<%=phone2 %>-<%=phone3 %> <br>
+우편번호 : <%=post %> <br>
+주소 : <%=address %> <br>
+성별 : <%=gender %> <br>
+취미 : <%=h%> <br>
+자기소개1 :
+<pre><%=intro %></pre>
+<br>
+자기소개2 : <br>
+<%=introduce %><br>
+
+
+
+
+
+ 

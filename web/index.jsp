@@ -7,10 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head><title>application 속성 지정</title></head>
+<body>
+<h1 align="center">application 객체로 공유한 값</h1>
+<hr>
+<%=application.getAttribute("java")%>
+</body>
 </html>

@@ -3,6 +3,7 @@
 
 <%  // 쿠키값을 URLEncoder 클래스를 이용해서 인코딩 한다.
     Cookie cookie = new Cookie("name", URLEncoder.encode("최범균"));
+	// 쿠키 발행
     response.addCookie(cookie);
 %>
 

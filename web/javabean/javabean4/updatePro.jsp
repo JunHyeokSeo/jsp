@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="register.LogonDataBean" %>
-<%@ page import="register.LogonDBBean" %>
+<%@ page import="javaBeanExam.register.LogonDataBean" %>
+<%@ page import="javaBeanExam.register.LogonDBBean" %>
 <%@ include file="color.jsp" %>
 
 <% 
@@ -10,7 +10,7 @@
 // regBean1.id="test";
 %>
 
-<jsp:useBean id="regBean" class="register.LogonDataBean" />
+<jsp:useBean id="regBean" class="javaBeanExam.register.LogonDataBean" />
 <jsp:setProperty name="regBean" property="*" />
 
 <%

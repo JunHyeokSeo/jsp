@@ -2,7 +2,7 @@
 
 <% request.setCharacterEncoding("utf-8"); %>
 
-<jsp:useBean id="join" class="join.JoinBean"/>
+<jsp:useBean id="join" class="javaBeanExam.join.JoinBean"/>
 <jsp:setProperty name="join" property="*"/>
 
 <html>

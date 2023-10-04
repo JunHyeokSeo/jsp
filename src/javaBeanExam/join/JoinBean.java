@@ -1,4 +1,4 @@
-package join;
+package javaBeanExam.join;
 
 public class JoinBean {
 	private String id;

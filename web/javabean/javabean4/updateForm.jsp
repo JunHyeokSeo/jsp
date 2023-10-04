@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="register.LogonDBBean" %>  
-<%@ page import="register.LogonDataBean" %>  
+<%@ page import="javaBeanExam.register.LogonDBBean" %>
+<%@ page import="javaBeanExam.register.LogonDataBean" %>
 <%@ include file="color.jsp" %>
 
 <%

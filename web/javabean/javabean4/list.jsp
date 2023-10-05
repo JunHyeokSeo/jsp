@@ -31,7 +31,6 @@
         LogonDBBean manager = LogonDBBean.getInstance();
         List<LogonDataBean> li = manager.selectMember();
 
-
         for (int i = 0; i < li.size(); i++) {
             LogonDataBean db = li.get(i);
     %>

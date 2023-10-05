@@ -18,9 +18,10 @@
 %>
 
 <%
+    //DAO 객체 생성
     LogonDBBean manager = LogonDBBean.getInstance();
-    int result = manager.insertMember(regBean);
-
+	//insert된 객체의 수를 반환
+	int result = manager.insertMember(regBean);
     if (result == 1) {
 %>
 <script>

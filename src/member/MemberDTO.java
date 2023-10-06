@@ -23,7 +23,7 @@ public class MemberDTO {
 	private String gender;
 	private String hobby;
 	private String intro;
-	private Timestamp timestamp;
+	private Timestamp register;
 
 	public String getId() {
 		return id;
@@ -169,11 +169,11 @@ public class MemberDTO {
 		this.intro = intro;
 	}
 
-	public Timestamp getTimestamp() {
-		return timestamp;
+	public Timestamp getRegister() {
+		return register;
 	}
 
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
+	public void setRegister(Timestamp register) {
+		this.register = register;
 	}
 }

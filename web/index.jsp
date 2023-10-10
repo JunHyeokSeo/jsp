@@ -7,10 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head><title>application 속성 지정</title></head>
+<head><title>일반게시판</title></head>
 <body>
-<h1 align="center">application 객체로 공유한 값</h1>
-<hr>
-<%=application.getAttribute("java")%>
+일반게시판
 </body>
 </html>

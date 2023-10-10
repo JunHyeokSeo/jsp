@@ -14,3 +14,7 @@
 
 		<!-- url="jdbc:oracle:thin:@127.0.0.1:1521:xe" -->
 		<!-- url="jdbc:oracle:thin:@orcl.cyqct7nnxb1u.ap-northeast-2.rds.amazonaws.com:1521:orcl" -->
+		<!--
+		 maxActive="500"  컨넥션풀이 관리하는 컨넥션의 최대 갯수(기본값 : 8)
+		 maxIdle="100" 	  컨넥션풀이 관리하는 최대 유휴 갯수(기본값 : 8)
+		-->

@@ -9,12 +9,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <html>
 <head>
     <title>게시판 목록</title>
 </head>
 <body>
 <%
+    // 검색 항목과 검색어를 받는 부분
+    String sel = request.getParameter("sel");
+    String find = request.getParameter("find");
+
     //1. 한 화면(페이지)에 출력할 데이터 개수
     int page_size = 10;
 
@@ -29,7 +34,7 @@
     //3. 총 데이터 갯수
     int count = 0;
     BoardDBBean dao = BoardDBBean.getInstance();
-    count = dao.getCount();
+    count = dao.getCount(sel, find);
     //    System.out.println("count : " + count);
 
     //startRow : 각 page에 추출할 데이터의 시작번호
@@ -39,7 +44,7 @@
 
     List<BoardDataBean> list = null;
     if (count > 0) {
-        list = dao.getList(startRow, endRow);
+        list = dao.getList(startRow, endRow, sel, find);
     }
 //    System.out.println("list : " + list);
     if (count == 0) {
@@ -71,7 +76,7 @@
         <td><%=number--%>
         </td>
         <td>
-            <a href="content.jsp?num=<%=board.getNum()%>&page=<%=currentPage%>"><%=board.getSubject()%></a>
+            <a href="content.jsp?num=<%=board.getNum()%>&page=<%=currentPage%>&sel=<%=sel%>&find=<%=find%>"><%=board.getSubject()%></a>
         </td>
         <td><%=board.getWriter()%>
         </td>
@@ -107,11 +112,11 @@
 
     %>
             <%-- 1page로 이동--%>
-            <a href="list.jsp?page=1" style="text-decoration: none"><</a>
+            <a href="list.jsp?page=1&sel=<%=sel%>&find=<%=find%>" style="text-decoration: none"><</a>
     <%
         //이전 블럭으로 이동
         if (startPage > 10) { %>
-        <a href="list.jsp?page=<%=startPage-1%>">[이전]</a>
+        <a href="list.jsp?page=<%=startPage-1%>&sel=<%=sel%>&find=<%=find%>">[이전]</a>
     <%  }   %>
     <%
             for (int i = startPage; i <= endPage; i++) {
@@ -119,20 +124,49 @@
     %>
                     [<%=i%>]
                 <% } else { %>
-                    <a href="list.jsp?page=<%=i%>">[<%=i%>]</a>
+                    <a href="list.jsp?page=<%=i%>&sel=<%=sel%>&find=<%=find%>">[<%=i%>]</a>
                 <%  } %>
     <%
             }
 
 	//다음 블럭으로 이동
     if (endPage < pageCount) { %>
-    <a href="list.jsp?page=<%=endPage+1%>">[다음]</a>
+    <a href="list.jsp?page=<%=endPage+1%>&sel=<%=sel%>&find=<%=find%>">[다음]</a>
     <%  }   %>
             <%-- 마지막 page로 이동--%>
-            <a href="list.jsp?page=<%=pageCount%>" style="text-decoration: none">></a>
+            <a href="list.jsp?page=<%=pageCount%>&sel=<%=sel%>&find=<%=find%>" style="text-decoration: none">></a>
     <%
         }
     %>
 </center>
+<br><br><br>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    $(function () {
+        $('form').submit(function () {
+            if ($('select').val() === "") {
+                alert('검색할 항목을 선택하세요.');
+                return false;
+            }
+
+            if ($('#find').val() === "") {
+                alert('검색어를 입력하세요.');
+                $('#find').focus();
+                return false;
+            }
+        });
+    });
+</script>
+<form action="list.jsp">
+    <select name="sel" id="sel">
+        <option value="">검색</option>
+        <option value="writer">작성자</option>
+        <option value="subject">제목</option>
+        <option value="content">내용</option>
+    </select>
+    <input type="text" name="find" id="find">
+    <input type="submit" value="검색">
+</form>
 </body>
 </html>

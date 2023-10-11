@@ -53,13 +53,22 @@ public class BoardDBBean {
 		return result;
 	}
 
-	public int getCount() {
+	public int getCount(String sel, String find) {
 		int count = 0;
 		ResultSet rs = null;
 
 		try {
 			conn = getConnection();
-			String sql = "select count(*) from TOTORO.BOARD";
+			String sql = "";
+//			System.out.println("sel : " + sel);
+//			System.out.println("find : " + find);
+//			System.out.println("sel.equal(null) : " + sel.equals("null"));
+//			System.out.println("find.equal(null) : " + find.equals("null"));
+			if ((sel != null && find != null) && !(sel.equals("null") || find.equals("null"))) {
+				sql = "select count(*) from TOTORO.BOARD where " + sel + " like '%" + find + "%'";
+			} else {
+				sql = "select count(*) from TOTORO.BOARD";
+			}
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -79,15 +88,19 @@ public class BoardDBBean {
 		return count;
 	}
 
-	public List<BoardDataBean> getList(int startRow, int endRow) {
+	public List<BoardDataBean> getList(int startRow, int endRow, String sel, String find) {
 		List<BoardDataBean> list = new ArrayList<BoardDataBean>();
 		ResultSet rs = null;
 
 		try {
 			conn = getConnection();
-//			String sql = "select * from (select * from TOTORO.BOARD ORDER BY NUM asc) where ROWNUM between ? and ?";
-			String sql = "select * from (select ROWNUM rnum, board.* from (select * from TOTORO.BOARD order by NUM desc) board ) where rnum between ? and ?";
-//			String sql = "select * from (select rownum rnum, board.* from (select * from board order by num desc) board) where rnum >= ? and rnum <= ?";
+			String sql = "";
+
+			if ((sel != null && find != null) && !(sel.equals("null") || find.equals("null"))) {
+				sql = "select * from (select ROWNUM rnum, board.* from (select * from TOTORO.BOARD where " + sel + " like '%" + find + "%' order by NUM desc) board ) where rnum between ? and ?";
+			} else {
+				sql = "select * from (select ROWNUM rnum, board.* from (select * from TOTORO.BOARD order by NUM desc) board ) where rnum between ? and ?";
+			}
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -120,5 +133,121 @@ public class BoardDBBean {
 			}
 		}
 		return list;
+	}
+
+	//상세 페이지 : 조회수 1 증가 + 상세정보 구하기
+	public BoardDataBean updateContent(int num) {
+		try {
+			conn = getConnection();
+
+			//update
+			String sql = "update TOTORO.BOARD set READCOUNT=READCOUNT+1 where NUM=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return getContent(num);
+	}
+
+	//수정폼 : 상세 정보 구하기
+	public BoardDataBean getContent(int num) {
+		BoardDataBean board = new BoardDataBean();
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			//select
+			String sql = "select * from TOTORO.BOARD where NUM=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				board.setNum(rs.getInt("num"));
+				board.setWriter(rs.getString("writer"));
+				board.setSubject(rs.getString("subject"));
+				board.setPasswd(rs.getString("passwd"));
+				board.setReadcount(rs.getInt("readcount"));
+				board.setContent(rs.getString("content"));
+				board.setEmail(rs.getString("email"));
+				board.setReg_date(rs.getTimestamp("reg_date"));
+				board.setIp(rs.getString("ip"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return board;
+	}
+
+	//글수정
+	public int update(BoardDataBean board) {
+		int result = 0;
+
+		try {
+			conn = getConnection();
+
+			//update
+			String sql = "update TOTORO.BOARD set WRITER=?, EMAIL=?, SUBJECT=?, REG_DATE=sysdate, CONTENT=? where NUM=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, board.getWriter());
+			pstmt.setString(2, board.getEmail());
+			pstmt.setString(3, board.getSubject());
+			pstmt.setString(4, board.getContent());
+			pstmt.setInt(5, board.getNum());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	//글삭제
+	public int delete(int num) {
+		int result = 0;
+
+		try {
+			conn = getConnection();
+
+			//update
+			String sql = "delete from TOTORO.BOARD where NUM=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 }

@@ -9,6 +9,8 @@
 <html>
 <head><title>일반게시판</title></head>
 <body>
-일반게시판
+<script>
+    location.href = "/reboard/writeForm.jsp";
+</script>
 </body>
 </html>

@@ -14,6 +14,7 @@ public class ReBoardDataBean {
 	private int re_step;
 	private int re_level;
 	private String content;
+	private String ip;
 
 	public int getNum() {
 		return num;
@@ -110,6 +111,4 @@ public class ReBoardDataBean {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-
-	private String ip;
 }

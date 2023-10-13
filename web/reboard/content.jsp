@@ -58,8 +58,8 @@
     <tr>
         <td colspan="4" align="center">
             <input type="button" value="댓글" onclick="location.href='replyForm.jsp?num=<%=num%>&page=<%=nowPage%>&ref=<%=ref%>&re_level=<%=re_level%>&re_step=<%=re_step%>'">
-            <input type="button" value="수정" onclick="location.href='updateForm.jsp'">
-            <input type="button" value="삭제" onclick="location.href='deleteForm.jsp'">
+            <input type="button" value="수정" onclick="location.href='updateForm.jsp?num=<%=num%>&page=<%=nowPage%>'">
+            <input type="button" value="삭제" onclick="location.href='deleteForm.jsp?num=<%=num%>&page=<%=nowPage%>'">
             <input type="button" value="목록" onclick="location.href='list.jsp?page=<%=nowPage%>'">
         </td>
     </tr>

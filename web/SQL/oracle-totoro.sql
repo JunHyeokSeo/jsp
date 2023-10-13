@@ -65,3 +65,5 @@ create sequence reboard_seq
     nocache;
 
 commit;
+
+select num, subject, ref, re_level, re_step from reboard;

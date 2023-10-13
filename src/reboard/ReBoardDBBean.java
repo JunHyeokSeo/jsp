@@ -1,5 +1,7 @@
 package reboard;
 
+import board.BoardDataBean;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -18,7 +20,7 @@ public class ReBoardDBBean {
 		return instance;
 	}
 
-	private Connection getConnection() throws Exception{
+	private Connection getConnection() throws Exception {
 		Context init = new InitialContext();
 		DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/orcl");
 		return ds.getConnection();
@@ -190,6 +192,10 @@ public class ReBoardDBBean {
 
 			//현재 댓글을 입력하는 게시글을 기준으로 하위 글들의 step을 1씩 증가 ( 우선순위를 하나씩 미루는 것 )
 			//최근에 작성한 댓글이 출력 우선권을 갖기 때문
+			// 1. 원문에 댓글 작성
+			// step == 0이기 때문에, 댓글의 step 모두 1씩 증가
+			// 2. 댓글에 대댓글 작성
+			// 본인보다 step 값이 높은 글의 step을 1씩 증가시키고 step+1을 step으로 갖는 대댓글 작성
 			String sql = "update REBOARD set RE_STEP=RE_STEP+1 where REF=? and RE_STEP > ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, ref);       //부모의 ref
@@ -204,11 +210,72 @@ public class ReBoardDBBean {
 			pstmt.setString(4, board.getPasswd());
 			pstmt.setInt(5, 0);                 //readcount
 			pstmt.setInt(6, ref);                  //ref
-			pstmt.setInt(7, re_step+1);         //re_step
-			pstmt.setInt(8, re_level+1);        //re_level
+			pstmt.setInt(7, re_step + 1);         //re_step
+			pstmt.setInt(8, re_level + 1);        //re_level
 			pstmt.setString(9, board.getContent());
 			pstmt.setString(10, board.getIp());
 
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (con != null) con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	public int update(ReBoardDataBean board) {
+		int result = 0;
+
+		try {
+			con = getConnection();
+
+			//update
+			String sql = "update REBOARD set WRITER=?, EMAIL=?, SUBJECT=?, CONTENT=? where NUM=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, board.getWriter());
+			pstmt.setString(2, board.getEmail());
+			pstmt.setString(3, board.getSubject());
+			pstmt.setString(4, board.getContent());
+			pstmt.setInt(5, board.getNum());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (con != null) con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	//글삭제
+	public int delete(ReBoardDataBean board) {
+		int result = 0;
+
+		try {
+			con = getConnection();
+			String sql = "";
+
+			//원문
+			if (board.getRe_level() == 0) {
+				sql = "delete from REBOARD where REF=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, board.getRef());
+			} else {
+				//delete
+				sql = "delete from REBOARD where NUM=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, board.getNum());
+			}
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

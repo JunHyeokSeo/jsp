@@ -6,13 +6,13 @@
 	<title>게시판</title>
 	<link href="style.css" rel="stylesheet" type="text/css">
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script src="js/check.js"></script>
+	<script src="check.js"></script>
 </head>   
 
 <body bgcolor="<%=bodyback_c%>">  
 <center><b>글쓰기</b>
 <br>
-<form method="post" name="writeform" action="writePro.jsp">
+<form method="post" name="writeform" action="writePro.jsp" enctype="multipart/form-data">
 
 <table width="430" border="1" cellspacing="0" cellpadding="0"  bgcolor="<%=bodyback_c%>" align="center">
    <tr>

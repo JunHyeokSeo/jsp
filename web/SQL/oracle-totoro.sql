@@ -83,3 +83,8 @@ create sequence upload_seq
     start with 1
     increment by 1
     nocache;
+
+drop sequence upload_seq;
+
+select *
+from SEQ;

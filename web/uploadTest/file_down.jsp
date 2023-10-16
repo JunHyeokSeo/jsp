@@ -10,9 +10,11 @@
     System.out.println("fileName=" + fileName);
 
     String savePath = "upload";
-    //servletContext 객체 생성
-    ServletContext context = getServletContext();
+//    //servletContext 객체 생성
+    ServletContext context = request.getServletContext();
     String sDownloadPath = context.getRealPath(savePath);
+//    String sDownloadPath = request.getRealPath(savePath);
+
     // "\\" 사용이유 - 운영체제마다 path 설정이 다름. 각자 운영체제에 맞게 자유롭게 수정 가능
     String sFilePath = sDownloadPath + "/" + fileName;
     System.out.println("sFilePath=" + sFilePath);
@@ -23,11 +25,12 @@
 
     try {
         byte[] b = new byte[4096];
-        File oFile = new File(sFilePath);
+
+//        File oFile = new File(sFilePath);
 
         FileInputStream in = new FileInputStream(sFilePath);
 
-        String sMimeType = getServletContext().getMimeType(sFilePath);
+        String sMimeType = request.getServletContext().getMimeType(sFilePath);
         System.out.println("sMimeType>>>" + sMimeType);
 
         // 다운로드 파일의 파일형식(마임타입) 설정

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%><%@page import="java.text.SimpleDateFormat"%>
+    pageEncoding="UTF-8"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.List"%>
 <%@ page import="upload.BoardDataBean"%>
 <%@ page import="upload.BoardDBBean"%>
@@ -106,7 +107,7 @@ if(count > 0){
 	int pageCount=count/page_size + ((count%page_size==0) ? 0:1);
 	System.out.println("pageCount:"+pageCount);
 	
-	// srartPage : 각 블럭의 시작 페이지 번호    1, 11, 21...
+	// srartPage : 각 블럭의 시작 페이지 번호      1, 11, 21...
 	// endPage : 각 블럭의 끝 페이지 번호         10, 20, 30...
 	int startPage = ((currentPage-1)/10) * 10 + 1;
 	int block = 10;	// 1개의 블럭의 크기 : 10개의 페이지로 구성

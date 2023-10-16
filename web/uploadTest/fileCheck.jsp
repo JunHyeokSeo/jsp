@@ -21,5 +21,5 @@
 <br>
 파일명2 : <a href="file_down.jsp?file_name=<%=filename2 %>"><%=origfilename2 %></a>
 <p>
-</body>다
+</body>
 </html>

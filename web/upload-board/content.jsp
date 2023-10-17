@@ -65,13 +65,9 @@
 	</tr>
 	<tr>
 		<td colspan=4 align=center>
-			<input type="button" value="글수정" 
-onClick="location.href='updateForm.jsp?num=<%=num%>&page=<%=nowpage%>' ">
-					
-			<input type="button" value="글삭제">	
-				
-			<input type="button" value="글목록" 
-onClick="location.href='list.jsp?page=<%=nowpage%>' ">		
+			<input type="button" value="글수정" onClick="location.href='updateForm.jsp?num=<%=num%>&page=<%=nowpage%>' ">
+			<input type="button" value="글삭제" onclick="location.href='deleteForm.jsp?num=<%=num%>&page=<%=nowpage%>' ">
+			<input type="button" value="글목록" onClick="location.href='list.jsp?page=<%=nowpage%>' ">
 		</td>
 	</tr>	
 </table>

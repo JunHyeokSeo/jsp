@@ -33,7 +33,7 @@
     board.setNum(num);
     board.setWriter(writer);
     board.setEmail(email);
-    board.setSubject(email);
+    board.setSubject(subject);
     board.setContent(content);
     board.setPasswd(passwd);
     board.setIp(request.getRemoteAddr());

@@ -2,6 +2,7 @@
 
 package upload;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -210,7 +211,6 @@ public class BoardDBBean {
 			con = getConnection();
 
 			String sql="select * from upload where num=?";
-
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();	// select SQL문 실행
@@ -241,8 +241,85 @@ public class BoardDBBean {
 		return board;
 	}
 
-	//글수정
-	public int update()
+	// 글수정
+	public int update(BoardDataBean board) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = getConnection();
+
+			String sql="update upload set writer=?, email=?, subject=?, content=?, ip=?, upload=? where num=?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, board.getWriter());
+			pstmt.setString(2, board.getEmail());
+			pstmt.setString(3, board.getSubject());
+			pstmt.setString(4, board.getContent());
+			pstmt.setString(5, board.getIp());
+			pstmt.setString(6, board.getUpload());
+			pstmt.setInt(7, board.getNum());
+
+			result = pstmt.executeUpdate();	// update SQL문 실행
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	//글삭제 + 첨부파일 삭제
+	public int delete(BoardDataBean board, String path) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			//글삭제
+			con = getConnection();
+			String sql = "delete from UPLOAD where NUM=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board.getNum());
+			pstmt.executeUpdate();
+
+			//첨부파일 삭제
+			if (board.getUpload() != null) {
+				File file = new File(path);
+
+				//upload 디렉토리의 모든 파일을 구해온다
+				File[] files = file.listFiles();
+				for (int i = 0; i < files.length; i++) {
+					if (files[i].getName().equals(board.getUpload())) {
+						files[i].delete();
+						result = 1;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+
+
+
+
 
 
 

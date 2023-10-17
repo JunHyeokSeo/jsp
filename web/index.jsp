@@ -10,7 +10,7 @@
 <head><title>일반게시판</title></head>
 <body>
 <script>
-    location.href = "/upload-board/writeForm.jsp";
+    location.href = "/upload-board/list.jsp";
 </script>
 </body>
 </html>

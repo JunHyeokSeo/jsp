@@ -47,14 +47,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<a href="writeForm.jsp">글작성</a> 글갯수 : <%=count %>
 <%
 	if(count == 0){
 %>
-		작성된 글이 없습니다.
+        <br><br><br>작성된 글이 없습니다.
 <%	}else{ %>
-	
-		<a href="writeForm.jsp">글작성</a> 글갯수 : <%=count %>
 		<table border=1 width=700 align=center>
 			<caption>게시판 목록</caption>
 			<tr>
